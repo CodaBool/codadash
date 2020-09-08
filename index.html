@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon.gif" />
+  <title>CodaBool Dashboard</title>
+  <style>
+    html {
+      margin:0;
+      padding:0;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-color: rgb(39, 39, 39);
+    }
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background-color: grey;
+      text-align: center;
+      border: none;
+    }
+    #title {
+      font-size: 2em;
+      color: white;
+    }
+    #time {
+      color: rgba(255, 255, 255, 1);
+      margin: 80px auto 0 auto;
+      text-align: center;
+      font-size: 4em;
+      text-shadow: 0 0 5px rgb(0, 0, 0); /* h-shadow v-shadow blur-radius */
+      opacity: 0.7;
+    }
+    .container {
+      width: 60%;
+      margin: 80px auto 0 auto;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+    .card {
+      margin: 0 180px 150px 0;
+      box-shadow: 0 0 10px rgba(77, 77, 77, 0.5);
+      background-color: rgba(146, 135, 135, 0.15);
+      flex: auto;
+      width: 30%;
+      text-align: center;
+    }
+    img {
+      width: 175px;
+    }
+  </style>
+</head>
+<body>
+  <h1 id="time"></h1>
+  <span class="container">
+    <a href="https://media.codadash.com" class="card">
+      <img src="./images/jellyfin.png" />
+    </a>
+    <a href="https://pass.codadash.com" class="card">
+      <img src="./images/bitwarden.png" />
+    </a>
+    <a href="https://files.codadash.com" class="card">
+      <img src="./images/nextcloud.png" />
+    </a>
+    <a href="https://codabool.com" class="card">
+      <img src="./images/codabool.png" />
+    </a>
+  </span>
+
+  <script>
+    const NUMBER_OF_IMAGES = 23
+    var time, emoji = null
+    const timeEl = document.querySelector('#time')
+
+    function randImgNum() {
+      return Math.floor(Math.random() * Math.floor(NUMBER_OF_IMAGES)) + 1
+    }
+
+    function getImgUrl() {
+      return "./images/" + randImgNum() + ".jpg"
+    }
+    
+    function updateTime() {
+      var now = new Date(); 
+      hour = now.getHours(); 
+      minutes = (now.getMinutes() < 10 ? '0' : '') + now.getMinutes(); 
+      if (hour > 12) {
+        hour = hour - 12
+      }
+      time = hour + ":" + minutes + " "
+      updateEmoji()
+      updateDisplayTime()
+    }
+
+    function updateDisplayTime() {
+      timeEl.innerText = time + emoji
+    }
+
+    function updateEmoji() {
+      // 🌅 ☀️ ⛅ 🌤️ 🌇 🌄 🌕 🌑 ⛅ 🌙 🌗
+      if (hour <= 3) emoji = "🌑"
+      if (hour > 3 & hour <= 6) emoji = "🌗"
+      if (hour > 6 & hour <= 9) emoji = "🌅"
+      if (hour > 9 & hour <= 12) emoji = "⛅"
+      if (hour > 12 & hour <= 15) emoji = "☀️"
+      if (hour > 15 & hour <= 18) emoji = "🌤️"
+      if (hour > 18 & hour <= 21) emoji = "🌄"
+      if (hour > 21 & hour <= 24) emoji = "🌙"
+    }
+
+    window.onload = function setBackgroundandTime() {
+      const body = document.querySelector('html')
+      body.style.backgroundImage = "url(" + getImgUrl() + ")"
+      updateTime()
+      setInterval(function(){ updateTime() }, 1000);
+    }
+
+  </script>
+</body>
+</html>
