@@ -34,22 +34,46 @@
       opacity: 0.7;
     }
     .container {
-      width: 60%;
-      margin: 80px auto 0 auto;
+      width: 80%;
+      margin: 70px auto 0 auto;
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
     }
     .card {
-      margin: 0 180px 150px 0;
+      margin: 0 100px 100px 0;
       box-shadow: 0 0 10px rgba(77, 77, 77, 0.5);
       background-color: rgba(146, 135, 135, 0.15);
       flex: auto;
-      width: 30%;
+      width: 180px;
       text-align: center;
     }
     img {
       width: 175px;
+    }
+    @media (max-width: 960px) {
+      .container {
+        width: 100%;
+        margin: 40px auto 0 auto;
+      }
+      .card {
+        margin: 0 50px 100px 50px;
+        width: 100px;
+      }
+      img {
+        width: 65px;
+      }
+    }
+    @media (max-width: 416px) {
+      .container {
+        margin: 40px auto 0 auto;
+      }
+      .card {
+        margin: 0 20px 50px 20px;
+      }
+      img {
+        width: 105px;
+      }
     }
   </style>
 </head>
@@ -67,6 +91,21 @@
     </a>
     <a href="https://codabool.com" class="card">
       <img src="./images/codabool.png" />
+    </a>
+    <a href="https://movies.codabool.com" class="card">
+      <img src="./images/radarr.png" />
+    </a>
+    <a href="https://shows.codabool.com" class="card">
+      <img src="./images/sonarr.png" />
+    </a>
+    <a href="https://qbit.codabool.com" class="card">
+      <img src="./images/qbit.png" />
+    </a>
+    <a href="https://jackett.codabool.com" class="card">
+      <img src="./images/jackett.png" />
+    </a>
+    <a href="https://proxy.codabool.com" class="card">
+      <img src="./images/proxy.png" />
     </a>
   </span>
 

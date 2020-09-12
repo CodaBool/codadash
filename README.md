@@ -7,3 +7,4 @@
 
 # I want to add
 - Tiny Tiny RSS
+- Google Photos alt
