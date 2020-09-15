@@ -29,6 +29,7 @@
       color: rgba(255, 255, 255, 1);
       margin: 80px auto 0 auto;
       text-align: center;
+      width: 300px;
       font-size: 4em;
       text-shadow: 0 0 5px rgb(0, 0, 0); /* h-shadow v-shadow blur-radius */
       opacity: 0.7;
@@ -78,40 +79,47 @@
   </style>
 </head>
 <body>
-  <h1 id="time"></h1>
+  <h1 id="time" onclick="changeView()"></h1>
   <span class="container">
-    <a href="https://media.codadash.com" class="card">
+    <a href="https://media.codadash.com" class="card simple" id="jellyfin">
       <img src="./images/jellyfin.png" />
     </a>
-    <a href="https://pass.codadash.com" class="card">
+    <a href="https://pass.codadash.com" class="card simple" id="bitwarden">
       <img src="./images/bitwarden.png" />
     </a>
-    <a href="https://file.codadash.com" class="card">
+    <a href="https://file.codadash.com" class="card simple" id="nextcloud">
       <img src="./images/nextcloud.png" />
     </a>
-    <a href="https://codabool.com" class="card">
+    <a href="https://codabool.com" class="card adv" id="codabool">
       <img src="./images/codabool.png" />
     </a>
-    <a href="https://movies.codadash.com" class="card">
+    <a href="https://movies.codadash.com" class="card adv" id="radarr">
       <img src="./images/radarr.png" />
     </a>
-    <a href="https://shows.codadash.com" class="card">
+    <a href="https://shows.codadash.com" class="card adv" id="sonarr">
       <img src="./images/sonarr.png" />
     </a>
-    <a href="http://qbit.codadash.com" class="card">
+    <a href="http://qbit.codadash.com" class="card adv" id="qbit">
       <img src="./images/qbit.png" />
     </a>
-    <a href="https://jackett.codadash.com" class="card">
+    <a href="https://jackett.codadash.com" class="card adv" id="jackett">
       <img src="./images/jackett.png" />
     </a>
-    <a href="https://proxy.codadash.com" class="card">
+    <a href="https://proxy.codadash.com" class="card adv" id="proxy">
       <img src="./images/proxy.png" />
+    </a>
+    <a href="https://guac4.codadash.com" class="card adv" id="guac4">
+      <img src="./images/guacamole-4.png" />
+    </a>
+    <a href="https://guac8.codadash.com" class="card adv" id="guac8">
+      <img src="./images/guacamole-8.png" />
     </a>
   </span>
 
   <script>
     const NUMBER_OF_IMAGES = 23
     var time, emoji = null
+    var showAdv = false
     const timeEl = document.querySelector('#time')
 
     function randImgNum() {
@@ -150,10 +158,25 @@
       if (hour > 21 & hour <= 24) emoji = "🌙"
     }
 
+    function changeView() {
+      if (showAdv === false) {
+        document.querySelectorAll(".adv").forEach(el => {
+          el.style.display = "none"
+        })
+        showAdv = true
+      } else {
+        document.querySelectorAll(".adv").forEach(el => {
+          el.style.display = "block"
+        })
+        showAdv = false
+      }
+    }
+
     window.onload = function setBackgroundandTime() {
       const body = document.querySelector('html')
       body.style.backgroundImage = "url(" + getImgUrl() + ")"
       updateTime()
+      changeView()
       setInterval(function(){ updateTime() }, 1000);
     }
 
