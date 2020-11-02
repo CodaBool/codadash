@@ -1,0 +1,27 @@
+{
+  "name": "codadash",
+  "version": "1.0.0",
+  "description": "1. Jellyfin\r 2. NextCloud\r 3. BitWarden",
+  "main": "index.js",
+  "scripts": {
+    "server": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CodaBool/codadash.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CodaBool/codadash/issues"
+  },
+  "homepage": "https://github.com/CodaBool/codadash#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "pg": "^8.4.2",
+    "timeago.js": "^4.0.2"
+  }
+}
