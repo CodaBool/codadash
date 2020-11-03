@@ -9,3 +9,5 @@
 - Tiny Tiny RSS
 - Google Photos alt
 - Syncthing
+
+# adding node
