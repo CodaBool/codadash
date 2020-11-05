@@ -4,7 +4,7 @@
   "description": "1. Jellyfin\r 2. NextCloud\r 3. BitWarden",
   "main": "index.js",
   "scripts": {
-    "server": "node index.js"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
