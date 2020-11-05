@@ -7,6 +7,9 @@ var cors = require('cors')
 
 app.use(cors())
 
+// Prefer .env but unecessary in this local case
+const URI = "postgres://postgres:ven@192.168.1.34:5432/status"
+
 app.get('/', function (req, res) {
   res.send('This is an express server, the endpoints are pi4, pi8, win, and all');
 });
@@ -38,7 +41,7 @@ app.listen(5050, function () {
 
 async function singleTable(query) {
   let data = {}
-  let client = await new Client({ connectionString: process.env.URI })
+  let client = await new Client({ connectionString: URI })
   try {
     await client.connect()
     const result = await client.query(query)
@@ -53,7 +56,7 @@ async function singleTable(query) {
 async function allTables() {
   let data = []
   let result = {}
-  let client = await new Client({ connectionString: process.env.URI })
+  let client = await new Client({ connectionString: URI })
   try {
     await client.connect()
     result = await client.query('SELECT * FROM pi4;')
