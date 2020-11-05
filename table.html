@@ -61,7 +61,7 @@
       </tbody>
     </table>
     <div class="row hide">
-    <button class="btn btn-dark mx-auto mb-5" onclick="window.history.back()"><-</button>
+    <button class="btn btn-dark mx-auto mb-5" onclick="window.location.href = '/'">Home</button>
     </div>
   </div>
   <script>
@@ -93,7 +93,7 @@
     }
 
     window.onload = function setBackgroundandTime() {
-      axios.get('http://192.168.1.32:5050/all')
+      axios.get('http://127.0.0.1:5050/all')
         .then(res => {
           res.data.forEach(json => createTable(json))
         })
