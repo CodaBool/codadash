@@ -148,13 +148,9 @@
     <a href="http://192.168.1.32:8080/guacamole/" class="card adv" id="guac8" style="display: none;">
       <img src="./images/guacamole-local.png" />
     </a>
-    <div class="adv" id="dbData" style="display: none;">
-      <button onclick="showStats()">Stats</button>
-      <div class="show" id="statContainer">
-        <div class="spinner"></div>
-        <table id="dbTable"></table>
-      </div>
-    </div>
+    <a href="/table.html" class="card adv" id="table" style="display: none;">
+      <img src="./images/table.png" />
+    </a>
     
   </span>
 
@@ -220,72 +216,12 @@
     }
 
     window.onload = function setBackgroundandTime() {
-      const table = document.querySelector('#dbTable')
-      axios.get('http://192.168.1.32:5050/all')
-        .then(res => {
-          console.log(res)
-          table.innerHTML = makeTable(res.data)
-        })
-        .catch(err => {
-          table.innerHTML = 'DB error'
-        })
-        .finally(() => {
-          const spinner = document.querySelector('.spinner') 
-          spinner.style.display = 'none'
-        })
-
       const body = document.querySelector('html')
       body.style.backgroundImage = "url(" + getImgUrl() + ")"
       updateTime()
       changeView()
-      setInterval(function(){ updateTime() }, 1000);
+      setInterval(() => updateTime(), 1000);
     }
-
-    // generate HTML code for an object
-    function makeTable(json, css_class='dbGrid', tabs=1){
-        // helper to tabulate the HTML tags. will return '\t\t\t' for num_of_tabs=3
-        var tab = function(num_of_tabs){
-            var s = '';
-            for (var i=0; i<num_of_tabs; i++){
-                s += '\t';
-            }
-            //console.log('tabbing done. tabs=' + tabs)
-            return s;
-        }
-        // recursive function that returns a fixed block of <td>......</td>.
-        var generate_td = function(json){ 
-            if (!(typeof(json) == 'object')){
-                // for primitive data - direct wrap in <td>...</td>
-                return tab(tabs) + '<td>'+json+'</td>\n';
-            }else{
-                // recursive call for objects to open a new sub-table inside the <td>...</td>
-                // (object[key] may be also an object)
-                var s = tab(++tabs)+'<td>\n';
-                s +=        tab(++tabs)+'<table class="'+css_class+'">\n';
-                for (var k in json){
-                    s +=        tab(++tabs)+'<tr>\n';
-                    s +=          tab(++tabs)+'<td>' + k + '</td>\n';
-                    s +=                      generate_td(json[k]);
-                    s +=        tab(--tabs)+'</tr>' + tab(--tabs) + '\n';
-
-
-                }
-                // close the <td>...</td> external block
-                s +=        tab(tabs--)+'</table>\n';
-                s +=    tab(tabs--)+'</td>\n';
-                return s;
-            }
-        }
-        // construct the complete HTML code
-        var html_code = '' ;
-        html_code += tab(++tabs)+'<table class="'+css_class+'">\n';
-        html_code +=   tab(++tabs)+'<tr>\n';
-        html_code +=     generate_td(json);
-        html_code +=   tab(tabs--)+'</tr>\n';
-        html_code += tab(tabs--)+'</table>\n';
-        return html_code;
-    }
-
   </script>
 </body>
 </html>
