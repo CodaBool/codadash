@@ -221,8 +221,9 @@
 
     window.onload = function setBackgroundandTime() {
       const table = document.querySelector('#dbTable')
-      axios.get('http://192.168.1.27:5050/all')
+      axios.get('http://192.168.1.32:5050/all')
         .then(res => {
+          console.log(res)
           table.innerHTML = makeTable(res.data)
         })
         .catch(err => {
