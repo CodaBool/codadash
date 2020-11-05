@@ -16,11 +16,16 @@
       background-repeat: no-repeat;
       background-color: rgb(39, 39, 39);
     }
+    body {
+      background: none;
+      opacity: 0.9;
+    }
     .hide {
       display: none;
     }
     .title {
       font-size: 2em;
+      color: rgb(140, 194, 255);
     }
     .table {
       margin: 5% 0 5% 0;
@@ -106,25 +111,10 @@
       return "./images/" + randImgNum() + ".jpg"
     }
 
-    function changeView() {
-      if (showAdv === false) {
-        document.querySelectorAll(".adv").forEach(el => {
-          el.style.display = "none"
-        })
-        showAdv = true
-      } else {
-        document.querySelectorAll(".adv").forEach(el => {
-          el.style.display = "block"
-        })
-        showAdv = false
-      }
-    }
-
     window.onload = function setBackgroundandTime() {
       const body = document.querySelector('html')
       body.style.backgroundImage = "url(" + getImgUrl() + ")"
-      changeView()
-      axios.get('http://127.0.0.1:5050/all')
+      axios.get('http://192.168.1.32:5050/all')
         .then(res => {
           res.data.forEach(json => createTable(json))
         })
