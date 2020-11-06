@@ -35,7 +35,7 @@ app.use(function(req, res, next) {
   res.status(404).send("Sorry, that route doesn't exist");
 });
 
-app.listen(5050, function () {
+app.listen(5051, function () {
   console.log('Example app listening on port 5050.');
 });
 
@@ -61,15 +61,15 @@ async function allTables() {
     await client.connect()
     result = await client.query('SELECT * FROM pi4;')
     delete result.rows[0].id
-    result.rows[0].lastran = format(result.rows[0].lastran)
+    result.rows[0]['Last Ran'] = format(result.rows[0]['Last Ran'])
     data.push(result.rows[0])
     result = await client.query('SELECT * FROM pi8;')
     delete result.rows[0].id
-    // TODO: update column to include a lastran
+    result.rows[0]['Last Ran'] = format(result.rows[0]['Last Ran'])
     data.push(result.rows[0])
     result = await client.query('SELECT * FROM win;')
     delete result.rows[0].id
-    result.rows[0].lastran = format(result.rows[0].lastran)
+    result.rows[0]['Last Ran'] = format(result.rows[0]['Last Ran'])
     data.push(result.rows[0])
   } catch(err) {
     console.log(err)
