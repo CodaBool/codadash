@@ -59,15 +59,15 @@ async function allTables() {
   let client = await new Client({ connectionString: URI })
   try {
     await client.connect()
-    result = await client.query('SELECT * FROM pi4;')
+    result = await client.query('SELECT * FROM p4a;')
     delete result.rows[0].id
     result.rows[0]['Last Ran'] = format(result.rows[0]['Last Ran'])
     data.push(result.rows[0])
-    result = await client.query('SELECT * FROM pi8;')
+    result = await client.query('SELECT * FROM p8a;')
     delete result.rows[0].id
     result.rows[0]['Last Ran'] = format(result.rows[0]['Last Ran'])
     data.push(result.rows[0])
-    result = await client.query('SELECT * FROM win;')
+    result = await client.query('SELECT * FROM mom;')
     delete result.rows[0].id
     result.rows[0]['Last Ran'] = format(result.rows[0]['Last Ran'])
     data.push(result.rows[0])
