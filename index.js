@@ -1,9 +1,10 @@
-var express = require('express')
 require('dotenv').config()
+const express = require('express')
 const { Client } = require('pg')
 const { format } = require('timeago.js')
-var app = express()
-var cors = require('cors')
+const app = express()
+const cors = require('cors')
+const quotes = require("./quotes.js")
 
 app.use(cors())
 
@@ -17,6 +18,11 @@ app.get('/', function (req, res) {
 app.get('/p4a', function (req, res) {
   singleTable('SELECT * FROM p4a;')
     .then(response => res.status(200).json(response))  
+});
+app.get('/quote', function (req, res) {
+  const item = quotes[Math.floor(Math.random() * quotes.length)]
+  console.log('item', item)
+  res.status(200).send(item)
 });
 app.get('/p8a', function (req, res) {
   singleTable('SELECT * FROM p8a;')
