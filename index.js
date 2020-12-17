@@ -1,29 +1,29 @@
-var express = require('express');
+var express = require('express')
 require('dotenv').config()
 const { Client } = require('pg')
 const { format } = require('timeago.js')
-var app = express();
+var app = express()
 var cors = require('cors')
 
 app.use(cors())
 
 // Prefer .env but unecessary in this local case
-const URI = "postgres://postgres:ven@192.168.1.34:5432/status"
+const URI = "postgres://postgres:ven@192.168.1.34:5432"
 
 app.get('/', function (req, res) {
-  res.send('This is an express server, the endpoints are pi4, pi8, win, and all');
+  res.send('This is an express server, the endpoints are p4a, p8a, mom, and all');
 });
 
-app.get('/pi4', function (req, res) {
-  singleTable('SELECT * FROM pi4;')
+app.get('/p4a', function (req, res) {
+  singleTable('SELECT * FROM p4a;')
     .then(response => res.status(200).json(response))  
 });
-app.get('/pi8', function (req, res) {
-  singleTable('SELECT * FROM pi8;')
+app.get('/p8a', function (req, res) {
+  singleTable('SELECT * FROM p8a;')
     .then(response => res.status(200).json(response))  
 });
-app.get('/win', function (req, res) {
-  singleTable('SELECT * FROM win;')
+app.get('/mom', function (req, res) {
+  singleTable('SELECT * FROM mom;')
     .then(response => res.status(200).json(response))  
 });
 app.get('/all', function (req, res) {
@@ -36,7 +36,7 @@ app.use(function(req, res, next) {
 });
 
 app.listen(5050, function () {
-  console.log('Example app listening on port 5050.');
+  console.log('Started on port', 5050, 'http://localhost:5050');
 });
 
 async function singleTable(query) {
