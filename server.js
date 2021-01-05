@@ -1,5 +1,5 @@
-// require('dotenv').config({ path:'/home/codabool/express/.env' })
-require('dotenv').config()
+// setup for mom
+require('dotenv').config({ path:'/home/codabool/codadash/.env' })
 const express = require('express')
 const { Pool } = require('pg')
 const app = express()
@@ -24,7 +24,7 @@ async function query(q, values) {
     })
 }
 
-app.get('/stats', async (req, res) => {
+app.get('/', async (req, res) => {
   try {
     const result = await query('SELECT * FROM post', [])
     let totalViews = 0
@@ -44,6 +44,6 @@ app.use((req, res) => {
   res.status(404).send("Sorry, that route doesn't exist");
 });
 
-app.listen(3002, () => {
-  console.log('Express started at ', 3002, 'http://localhost:3002');
+app.listen(3001, () => {
+  console.log('Express started at ', 3001, 'http://localhost:3001');
 });
