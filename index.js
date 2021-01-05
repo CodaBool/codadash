@@ -1,6 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 const { Pool } = require('pg')
+const { Client } = require('pg');
 const { format } = require('timeago.js')
 const app = express()
 const cors = require('cors')
@@ -34,6 +35,29 @@ app.get('/all', function (req, res) {
       console.log('res', response)
       res.status(200).json(response)
     })  
+});
+app.get('/test', async function (req, res) {
+  const client = new Client({
+    connectionString: process.env.PG_REMOTE_URI,
+    ssl: {
+      rejectUnauthorized: false
+    }
+  });
+  
+  try{
+    await client.connect();
+    await client.query('SELECT * FROM post;', (err, res) => {
+      if (err) throw err;
+      for (let row of res.rows) {
+        console.log(JSON.stringify(row));
+      }
+    });
+  } catch(err) {
+    console.log('caught err', err)
+  } finally {
+    await client.end();
+  }
+  res.status(200).json({you_should:'check logs'})
 });
 
 app.use(function(req, res) {
