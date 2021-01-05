@@ -14,12 +14,13 @@ async function query(q, values, pool) {
       return res
     })
     .catch(err => {
+      console.log('query error', err)
       return {err: err.message} // passes to nearest error handler
     })
 }
 
-app.get('/home', function (req, res) {
-  const statObj = getStats()
+app.get('/home', async function (req, res) {
+  const statObj = await getStats()
   console.log(statObj)
   res.status(200).json(statObj)
 });
@@ -65,7 +66,7 @@ async function getStats() {
   } finally {
     await pool.end()
   }
-  return {stats: result.rows, inReview: inReview.rows[0].count, totalViews}
+  return {stats: result.rows, inReview: inReview.rows, totalViews}
 }
 
 async function getTables() {
