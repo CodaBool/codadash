@@ -53,7 +53,7 @@ async function getStats() {
     max: 1, // default = 10
   })
   try {
-    console.log('pool', pool)
+    // console.log('pool', pool)
     // gets the stats for every post
     query('SELECT * FROM post', [], pool)
       .then(res=> console.log(res))
