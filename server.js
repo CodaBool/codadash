@@ -24,7 +24,7 @@ async function query(q, values) {
     })
 }
 
-app.get('/', async (req, res) => {
+app.get('/blog', async (req, res) => {
   try {
     const result = await query('SELECT * FROM post', [])
     let totalViews = 0
@@ -32,8 +32,8 @@ app.get('/', async (req, res) => {
       console.log(totalViews, ' + ', Number(result.rows[page].views))
       totalViews = totalViews + Number(result.rows[page].views)
     }
-    const inReview = await query('SELECT COUNT(*) FROM comment WHERE status=\'review\'', [])
-    res.status(200).json({stat: result.rows, inReview: inReview.rows[0].count, totalViews})
+    const inReview = await query("SELECT * FROM comment WHERE status='review'", [])
+    res.status(200).json({stat: result.rows, inReview: inReview.rows, totalViews})
   } catch (err) {
     console.log(err)
     res.status(400).send('General Error Cannot Stats')
