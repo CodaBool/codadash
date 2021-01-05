@@ -68,15 +68,15 @@ async function getTables() {
     max: 1, // default = 10
   })
   try {
-    result = await query('SELECT * FROM p4a;', [], pool)
+    result = await query('SELECT * FROM p4a', [], pool)
     delete result.rows[0].id
     result.rows[0]['Last Ran'] = format(result.rows[0]['Last Ran'])
     data.push(result.rows[0])
-    result = await query('SELECT * FROM p8a;', [], pool)
+    result = await query('SELECT * FROM p8a', [], pool)
     delete result.rows[0].id
     result.rows[0]['Last Ran'] = format(result.rows[0]['Last Ran'])
     data.push(result.rows[0])
-    result = await query('SELECT * FROM mom;', [], pool)
+    result = await query('SELECT * FROM mom', [], pool)
     delete result.rows[0].id
     result.rows[0]['Last Ran'] = format(result.rows[0]['Last Ran'])
     data.push(result.rows[0])
