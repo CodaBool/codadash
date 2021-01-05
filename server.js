@@ -1,4 +1,4 @@
-// setup for mom
+// setup for mom, who can connect to heroku db no problem unlike p4a
 require('dotenv').config({ path:'/home/codabool/codadash/.env' })
 const express = require('express')
 const { Pool } = require('pg')
