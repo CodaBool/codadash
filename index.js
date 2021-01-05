@@ -46,7 +46,7 @@ app.get('/test', async function (req, res) {
   
   try{
     await client.connect();
-    await client.query('SELECT * FROM post;', (err, res) => {
+    await client.query('SELECT table_schema,table_name FROM information_schema.tables;', (err, res) => {
       if (err) throw err;
       for (let row of res.rows) {
         console.log(JSON.stringify(row));
