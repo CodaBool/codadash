@@ -69,40 +69,38 @@
       <tbody id="mom-body">
       </tbody>
     </table>
+
+    <table class="table table-dark blog hide">
+      <thead>
+        <tr>
+          <th class="title">Blog</th>
+        </tr>
+      </thead>
+      <tbody id="blog-body">
+      </tbody>
+    </table>
+
     <div class="row hide">
     <button class="btn btn-dark mx-auto mb-5" onclick="window.location.href = '/'">Home</button>
     </div>
   </div>
   <script>
 
-    // function createTable(d) {
-    //   if (d.device === 'mom') {
-    //     const b = document.querySelector('#mom-body')
-    //     let html = ''
-    //     for (const k in d) {
-    //       console.log('loop', k, ' | ', d[k])
-    //       if (k !== 'device' && k !== 'eta') html += `<tr><th>${k}</th><td>${d[k]}</td></tr>`
-    //     }
-    //     b.innerHTML = html
-    //   } else if (d.device === 'p8a') {
-    //     console.log('This is a p8a obj', d)
-    //     const b = document.querySelector('#p8a-body')
-    //     let html = ''
-    //     for (const k in d) {
-    //       if (k !== 'device' && k !== 'names' && k !== 'errors') html += `<tr><th>${k}</th><td>${d[k]}</td></tr>`
-    //     }
-    //     b.innerHTML = html
-    //   } else if (d.device === 'p4a') {
-    //     const b = document.querySelector('#p4a-body')
-    //     let html = ''
-    //     for (const k in d) {
-    //       if (k !== 'device' && k !== 'eta' && k !== 'names' && k !== 'ratio' && k !== 'progress') html += `<tr><th>${k}</th><td>${d[k]}</td></tr>`
-    //     }
-    //     b.innerHTML = html
-    //   }
-    // }
+    function populateDevice(obj, id) {
+      const b = document.querySelector(id)
+      let html = ''
+      for (const k in obj) {
+        // bandaid fix to remove unwanted columns
+        // TODO: setup better columns
+        if (k !== 'Device' && k !== 'id' && k !== 'Transcoding' && k !== 'Ready' && k !== 'Status' && k !== 'New Videos') {
+          html += `<tr><th>${k}</th><td>${obj[k]}</td></tr>`
+        }
+      }
+      b.innerHTML = html
+    }
     function createTable(obj) {
-      const b = document.querySelector('#mom-body')
+      // blog
+      const b = document.querySelector('#blog-body')
       let html = ''
       html += `<tr><th>Total Blog Views</th><td>${obj.totalViews}</td></tr>`
       html += `<tr><th>Blog Posts with Comments to Review</th><td>${obj.inReview.length}</td></tr>`
@@ -114,6 +112,11 @@
         })
       })
       b.innerHTML = html
+
+      // device tables
+      populateDevice(obj.mom, '#mom-body')
+      populateDevice(obj.p4a, '#p4a-body')
+      populateDevice(obj.p8a, '#p8a-body')
     }
 
     const NUMBER_OF_IMAGES = 23
@@ -132,7 +135,7 @@
       axios.get('http://192.168.1.25:3001')
         .then(res => {
           console.log(res.data)
-          // createTable(res.data)
+          createTable(res.data)
         })
         .catch(err => {
           console.log(err)
@@ -143,11 +146,6 @@
           tables.forEach(table => table.classList.toggle('hide'))
           spinner.style.display = 'none'
         })
-      // axios.get('http://192.168.1.25:3001/devices')
-      //   .then(res => {
-      //     console.log('device data', res.data)
-      //     // createTable(res.data)
-      //   })
     }
     
   </script>
