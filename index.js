@@ -54,13 +54,15 @@ async function getStats() {
   })
   try {
     // gets the stats for every post
-    result = await query('SELECT * FROM post', [], pool)
-    for (const page in result.rows) { // find the total number of views
-      console.log(totalViews, ' + ', Number(result.rows[page].views))
-      totalViews = totalViews + Number(result.rows[page].views)
-    }
-    // get the number of comments to review
-    inReview = await query('SELECT COUNT(*) FROM comment WHERE status=\'review\'', [], pool)
+    query('SELECT * FROM post', [], pool)
+      .then(res=> console.log(res))
+      .catch(err=> console.log(err))
+    // for (const page in result.rows) { // find the total number of views
+    //   console.log(totalViews, ' + ', Number(result.rows[page].views))
+    //   totalViews = totalViews + Number(result.rows[page].views)
+    // }
+    // // get the number of comments to review
+    // inReview = await query('SELECT COUNT(*) FROM comment WHERE status=\'review\'', [], pool)
   } catch(err) {
     console.log(err)
   } finally {
