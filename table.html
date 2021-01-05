@@ -101,13 +101,18 @@
     //     b.innerHTML = html
     //   }
     // }
-    function createTable(d) {
+    function createTable(obj) {
       const b = document.querySelector('#mom-body')
       let html = ''
-      for (const k in d) {
-        if (k == 'inReview') html += `<tr><th>Comments to Review</th><td>${d[k]}</td></tr>`
-        if (k == 'totalViews') html += `<tr><th>Blog Views</th><td>${d[k]}</td></tr>`
-      }
+      html += `<tr><th>Total Blog Views</th><td>${obj.totalViews}</td></tr>`
+      html += `<tr><th>Blog Posts with Comments to Review</th><td>${obj.inReview.length}</td></tr>`
+      obj.inReview.forEach(comment => {
+        obj.stat.forEach(post => {
+          if (comment.post_id === post.post_id) {
+            html += `<tr><th>- ${post.title}</th><td>${post.views} views</td></tr>`
+          }
+        })
+      })
       b.innerHTML = html
     }
 
@@ -126,6 +131,7 @@
       body.style.backgroundImage = "url(" + getImgUrl() + ")"
       axios.get('http://192.168.1.25:3001/blog')
         .then(res => {
+          console.log(res.data)
           createTable(res.data)
         })
         .catch(err => {
