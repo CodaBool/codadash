@@ -143,6 +143,11 @@
           tables.forEach(table => table.classList.toggle('hide'))
           spinner.style.display = 'none'
         })
+      axios.get('http://192.168.1.25:3001/devices')
+        .then(res => {
+          console.log('device data', res.data)
+          // createTable(res.data)
+        })
     }
     
   </script>
