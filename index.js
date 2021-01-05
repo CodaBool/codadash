@@ -1,6 +1,6 @@
 require('dotenv').config()
 const express = require('express')
-const { Client } = require('pg')
+const { Pool } = require('pg')
 const { format } = require('timeago.js')
 const app = express()
 const cors = require('cors')
@@ -8,36 +8,33 @@ const quotes = require("./quotes.js")
 
 app.use(cors())
 
-// Prefer .env but unecessary in this local case
-const URI = "postgres://postgres:ven@192.168.1.34:5432"
+async function query(q, values, pool) {
+  return await pool.query(q, values)
+    .then(res => {
+      return res
+    })
+    .catch(err => {
+      return {err: err.message} // passes to nearest error handler
+    })
+}
 
-app.get('/', function (req, res) {
-  res.send('This is an express server, the endpoints are p4a, p8a, mom, and all');
-});
-
-app.get('/p4a', function (req, res) {
-  singleTable('SELECT * FROM p4a;')
-    .then(response => res.status(200).json(response))  
+app.get('/home', function (req, res) {
+  console.log(getStats())
+  res.status(200).send('codabool rise up')
 });
 app.get('/quote', function (req, res) {
   const item = quotes[Math.floor(Math.random() * quotes.length)]
-  console.log('item', item)
   res.status(200).send(item)
 });
-app.get('/p8a', function (req, res) {
-  singleTable('SELECT * FROM p8a;')
-    .then(response => res.status(200).json(response))  
-});
-app.get('/mom', function (req, res) {
-  singleTable('SELECT * FROM mom;')
-    .then(response => res.status(200).json(response))  
-});
 app.get('/all', function (req, res) {
-  allTables()
-    .then(response => res.status(200).json(response))  
+  getTables()
+    .then(response => {
+      console.log('res', response)
+      res.status(200).json(response)
+    })  
 });
 
-app.use(function(req, res, next) {
+app.use(function(req, res) {
   res.status(404).send("Sorry, that route doesn't exist");
 });
 
@@ -45,42 +42,48 @@ app.listen(5050, function () {
   console.log('Started on port', 5050, 'http://localhost:5050');
 });
 
-async function singleTable(query) {
-  let data = {}
-  let client = await new Client({ connectionString: URI })
+async function getStats() {
+  let result = {}
+  const pool = new Pool({
+    connectionString: process.env.PG_REMOTE_URI,
+    ssl: { rejectUnauthorized: false },
+    max: 1, // default = 10
+  })
   try {
-    await client.connect()
-    const result = await client.query(query)
-    data = result.rows[0]
+    result = await query('SELECT * FROM mom;', [], pool)
   } catch(err) {
     console.log(err)
   } finally {
-    client.end()
+    await pool.end()
   }
-  return data
+  return result
 }
-async function allTables() {
+
+async function getTables() {
   let data = []
   let result = {}
-  let client = await new Client({ connectionString: URI })
+  const pool = new Pool({
+    connectionString: process.env.PG_LOCAL_URI,
+    ssl: { rejectUnauthorized: false },
+    max: 1, // default = 10
+  })
   try {
-    await client.connect()
-    result = await client.query('SELECT * FROM p4a;')
+    result = await query('SELECT * FROM p4a;', [], pool)
     delete result.rows[0].id
     result.rows[0]['Last Ran'] = format(result.rows[0]['Last Ran'])
     data.push(result.rows[0])
-    result = await client.query('SELECT * FROM p8a;')
+    result = await query('SELECT * FROM p8a;', [], pool)
     delete result.rows[0].id
     result.rows[0]['Last Ran'] = format(result.rows[0]['Last Ran'])
     data.push(result.rows[0])
-    result = await client.query('SELECT * FROM mom;')
+    result = await query('SELECT * FROM mom;', [], pool)
     delete result.rows[0].id
     result.rows[0]['Last Ran'] = format(result.rows[0]['Last Ran'])
     data.push(result.rows[0])
   } catch(err) {
     console.log(err)
   } finally {
-    client.end()
+    await pool.end()
   }
   return data
 }
