@@ -129,10 +129,10 @@
     window.onload = function setBackgroundandTime() {
       const body = document.querySelector('html')
       body.style.backgroundImage = "url(" + getImgUrl() + ")"
-      axios.get('http://192.168.1.25:3001/blog')
+      axios.get('http://192.168.1.25:3001')
         .then(res => {
           console.log(res.data)
-          createTable(res.data)
+          // createTable(res.data)
         })
         .catch(err => {
           console.log(err)
@@ -143,11 +143,11 @@
           tables.forEach(table => table.classList.toggle('hide'))
           spinner.style.display = 'none'
         })
-      axios.get('http://192.168.1.25:3001/devices')
-        .then(res => {
-          console.log('device data', res.data)
-          // createTable(res.data)
-        })
+      // axios.get('http://192.168.1.25:3001/devices')
+      //   .then(res => {
+      //     console.log('device data', res.data)
+      //     // createTable(res.data)
+      //   })
     }
     
   </script>
