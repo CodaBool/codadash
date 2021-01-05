@@ -41,8 +41,7 @@ app.get('/stats', async (req, res) => {
 });
 
 app.use((req, res) => {
-  const uri = process.env.PG_REMOTE_URI || 'some ssl issue'
-  res.status(404).send(uri);
+  res.status(404).send("Sorry, that route doesn't exist");
 });
 
 app.listen(3002, () => {
