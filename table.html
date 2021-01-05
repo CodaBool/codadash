@@ -63,7 +63,7 @@
     <table class="table table-dark mom hide">
       <thead>
         <tr>
-          <th class="title">Windows</th>
+          <th class="title">Mom</th>
         </tr>
       </thead>
       <tbody id="mom-body">
@@ -80,6 +80,7 @@
         const b = document.querySelector('#mom-body')
         let html = ''
         for (const k in d) {
+          console.log('loop', k, ' | ', d[k])
           if (k !== 'device' && k !== 'eta') html += `<tr><th>${k}</th><td>${d[k]}</td></tr>`
         }
         b.innerHTML = html
@@ -114,9 +115,10 @@
     window.onload = function setBackgroundandTime() {
       const body = document.querySelector('html')
       body.style.backgroundImage = "url(" + getImgUrl() + ")"
-      axios.get('http://192.168.1.34:5050/all')
+      axios.get('http://192.168.1.25:3001')
         .then(res => {
-          res.data.forEach(json => createTable(json))
+          console.log(res.data)
+          // res.data.forEach(json => createTable(json))
         })
         .catch(err => {
           console.log(err)
