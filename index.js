@@ -19,8 +19,9 @@ async function query(q, values, pool) {
 }
 
 app.get('/home', function (req, res) {
-  console.log(getStats())
-  res.status(200).send('codabool rise up')
+  const statObj = getStats()
+  console.log(statObj)
+  res.status(200).json(statObj)
 });
 app.get('/quote', function (req, res) {
   const item = quotes[Math.floor(Math.random() * quotes.length)]
@@ -43,20 +44,28 @@ app.listen(5050, function () {
 });
 
 async function getStats() {
-  let result = {}
+  let result = {}, inReview = {}
+  let totalViews = 0
   const pool = new Pool({
     connectionString: process.env.PG_REMOTE_URI,
     ssl: { rejectUnauthorized: false },
     max: 1, // default = 10
   })
   try {
-    result = await query('SELECT * FROM mom;', [], pool)
+    // gets the stats for every post
+    result = await query('SELECT * FROM post', [], pool)
+    for (const page in result.rows) { // find the total number of views
+      console.log(totalViews, ' + ', Number(result.rows[page].views))
+      totalViews = totalViews + Number(result.rows[page].views)
+    }
+    // get the number of comments to review
+    inReview = await query('SELECT COUNT(*) FROM comment WHERE status=\'review\'', [], pool)
   } catch(err) {
     console.log(err)
   } finally {
     await pool.end()
   }
-  return result
+  return {stats: result.rows, inReview: inReview.rows[0].count, totalViews}
 }
 
 async function getTables() {
