@@ -1,5 +1,6 @@
 // setup for mom, who can connect to heroku db no problem unlike p4a
 require('dotenv').config({ path:'/home/codabool/codadash/.env' })
+const exec = require('child_process').exec;
 const express = require('express')
 const { format } = require('timeago.js')
 const { Pool } = require('pg')
@@ -27,6 +28,9 @@ async function query(q, values, p) {
       return {err: err.message} // passes to nearest error handler
     })
 }
+function execute(command, callback) {
+  exec(command, (error, stdout, stderr) => callback(stdout));
+}
 
 app.get('/', async (req, res) => {
   try {
@@ -45,7 +49,12 @@ app.get('/', async (req, res) => {
     p8a.rows[0]['Last Ran'] = format(p8a.rows[0]['Last Ran'])
     const mom = await query('SELECT * FROM mom', [], pool_local)
     mom.rows[0]['Last Ran'] = format(mom.rows[0]['Last Ran'])
-    res.status(200).json({ p4a: p4a.rows[0], p8a: p8a.rows[0], mom: mom.rows[0], stat: result.rows, inReview: inReview.rows, totalViews})
+    
+    // heroku hours
+    execute('/home/codabool/scripts/bash-scripts/getHeroku.sh', (output) => {
+      const hours = output.replace(/\s/g,'')
+      res.status(200).json({ p4a: p4a.rows[0], p8a: p8a.rows[0], mom: mom.rows[0], stat: result.rows, inReview: inReview.rows, totalViews, hours})
+    })
   } catch (err) {
     res.status(400).send('General Error Cannot Stats')
   }
