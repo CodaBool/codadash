@@ -90,9 +90,35 @@
       const b = document.querySelector(id)
       let html = ''
       for (const k in obj) {
-        // bandaid fix to remove unwanted columns
-        // TODO: setup better columns
-        if (k !== 'Device' && k !== 'id' && k !== 'Transcoding' && k !== 'Ready' && k !== 'Status' && k !== 'New Videos') {
+        if (k.includes('Space Left')) { // disk space
+          if (obj[k] > 50) {
+            html += `<tr><th>${k}💾</th><td class="text-info">${obj[k]}%</td></tr>`
+          } else {
+            html += `<tr><th>${k}💾</th><td class="text-danger">${obj[k]}%</td></tr>`
+          }
+        } else if (k === 'VPN Status') { // status
+          if (obj[k] === 'Connected') {
+            html += `<tr><th>${k}🌐</th><td class="text-info">${obj[k]}</td></tr>`
+          } else {
+            html += `<tr><th>${k}🌐</th><td class="text-danger">${obj[k]}</td></tr>`
+          }
+        } else if (k === 'QBit Status') { // qbit
+          if (obj[k] === 'active') {
+            html += `<tr><th>${k}👨‍💻</th><td class="text-warning">${obj[k]}</td></tr>`
+          } else {
+            html += `<tr><th>${k}👨‍💻</th><td class="text-info">${obj[k]}</td></tr>`
+          }
+        } else if (k === 'Completed') {
+          html += `<tr><th>${k}⏱️</th><td>${obj[k]}</td></tr>`
+        } else if (k === 'Downloading') {
+          html += `<tr><th>${k}🔽</th><td>${obj[k]}</td></tr>`
+        } else if (k === 'Transferring') {
+          html += `<tr><th>${k}🔼</th><td>${obj[k]}</td></tr>`
+        } else if (k === 'Videos') {
+          html += `<tr><th>${k}🎞️</th><td>${obj[k]}</td></tr>`
+        } else if (k === 'Last Ran') {
+          html += `<tr><th>${k}⌛</th><td>${obj[k]}</td></tr>`
+        } else {
           html += `<tr><th>${k}</th><td>${obj[k]}</td></tr>`
         }
       }
