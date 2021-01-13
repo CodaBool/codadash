@@ -102,6 +102,7 @@
       // blog
       const b = document.querySelector('#blog-body')
       let html = ''
+      html += `<tr><th>Heroku Hours</th><td>${obj.hours}</td></tr>`
       html += `<tr><th>Total Blog Views</th><td>${obj.totalViews}</td></tr>`
       html += `<tr><th>Blog Posts with Comments to Review</th><td>${obj.inReview.length}</td></tr>`
       obj.inReview.forEach(comment => {
