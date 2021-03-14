@@ -42,6 +42,13 @@ app.get('/', async (req, res) => {
     res.status(500).send('General Server Error')
   }
 });
+app.get('/dir', async (req, res) => {
+  try {
+    res.status(200).send(__dirname)
+  } catch (err) {
+    res.status(500).send('General Server Error')
+  }
+});
 
 app.get('/table', async (req, res) => {
   try {
