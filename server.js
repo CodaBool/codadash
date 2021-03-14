@@ -9,7 +9,7 @@ const cors = require('cors')
 const path = require('path')
 
 // app.use(express.static('images'))
-app.use(express.static(__dirname + '/images'))
+app.use(express.static(__dirname + '/public'))
 app.use(cors())
 
 const pool_remote = new Pool({
