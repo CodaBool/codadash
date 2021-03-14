@@ -116,43 +116,43 @@
   <h1 id="time" onclick="changeView()"></h1>
   <span class="container">
     <a href="https://media.codadash.com" class="card simple" id="jellyfin">
-      <img src="./images/jellyfin.png" />
+      <img src="/jellyfin.png" />
     </a>
     <a href="https://pass.codadash.com" class="card simple" id="bitwarden">
-      <img src="./images/bitwarden.png" />
+      <img src="/bitwarden.png" />
     </a>
     <a href="https://file.codadash.com/index.php/apps/files" class="card simple" id="nextcloud">
-      <img src="./images/nextcloud.png" />
+      <img src="/nextcloud.png" />
     </a>
     <a href="https://pihole.codadash.com/admin" class="card adv" id="pihole" style="display: none;">
-      <img src="./images/pihole-icon.png" />
+      <img src="/pihole-icon.png" />
     </a>
     <a href="https://codabool.com" class="card adv" id="codabool" style="display: none;">
-      <img src="./images/codabool.png" />
+      <img src="/codabool.png" />
     </a>
     <a href="https://movie.codadash.com" class="card adv" id="radarr" style="display: none;">
-      <img src="./images/radarr.png" />
+      <img src="/radarr.png" />
     </a>
     <a href="https://show.codadash.com" class="card adv" id="sonarr" style="display: none;">
-      <img src="./images/sonarr.png" />
+      <img src="/sonarr.png" />
     </a>
     <a href="http://qbit.codadash.com" class="card adv" id="qbit" style="display: none;">
-      <img src="./images/qbit.png" />
+      <img src="/qbit.png" />
     </a>
     <a href="https://jackett.codadash.com" class="card adv" id="jackett" style="display: none;">
-      <img src="./images/jackett.png" />
+      <img src="/jackett.png" />
     </a>
     <a href="https://proxy.codadash.com" class="card adv" id="proxy" style="display: none;">
-      <img src="./images/proxy.png" />
+      <img src="/proxy.png" />
     </a>
     <!-- <a href="https://guac.codadash.com" class="card adv" id="guac4" style="display: none;">
-      <img src="./images/guacamole-remote.png" />
+      <img src="/guacamole-remote.png" />
     </a>
     <a href="http://192.168.1.25:8080/guacamole/" class="card adv" id="guac8" style="display: none;">
-      <img src="./images/guacamole-local.png" />
+      <img src="/guacamole-local.png" />
     </a> -->
     <a href="http://192.168.1.25:9001/table.html" class="card adv" id="table" style="display: none;">
-      <img src="./images/table.png" />
+      <img src="/table.png" />
     </a>
   </span>
 
@@ -167,7 +167,7 @@
     }
 
     function getImgUrl() {
-      return "./images/" + randImgNum() + ".jpg"
+      return `/${randImgNum()}.jpg`
     }
     
     function updateTime() {

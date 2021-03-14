@@ -6,7 +6,9 @@ const { format } = require('timeago.js')
 const { Pool } = require('pg')
 const app = express()
 const cors = require('cors')
+const path = require('path')
 
+app.use(express.static('images'))
 app.use(cors())
 
 const pool_remote = new Pool({
@@ -34,6 +36,14 @@ function execute(command, callback) {
 
 app.get('/', async (req, res) => {
   try {
+    res.sendFile(path.join(__dirname + '/index.html'))
+  } catch (err) {
+    res.status(500).send('General Server Error')
+  }
+});
+
+app.get('/table', async (req, res) => {
+  try {
     // remote pg connection
     const result = await query('SELECT * FROM post', [], pool_remote)
     let totalViews = 0
@@ -56,7 +66,15 @@ app.get('/', async (req, res) => {
       res.status(200).json({ p4a: p4a.rows[0], p8a: p8a.rows[0], mom: mom.rows[0], stat: result.rows, inReview: inReview.rows, totalViews, hours})
     })
   } catch (err) {
-    res.status(400).send('General Error Cannot Stats')
+    res.status(500).send('General Error Cannot Stats')
+  }
+});
+
+app.get('/*', async (req, res) => {
+  try {
+    res.status(200).send('beans')
+  } catch (err) {
+    res.status(500).send('General beans Error')
   }
 });
 

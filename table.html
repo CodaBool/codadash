@@ -159,7 +159,7 @@
     window.onload = function setBackgroundandTime() {
       const body = document.querySelector('html')
       body.style.backgroundImage = "url(" + getImgUrl() + ")"
-      axios.get('http://192.168.1.25:3001')
+      axios.get('http://192.168.1.25:3001/table')
         .then(res => {
           console.log(res.data)
           createTable(res.data)
