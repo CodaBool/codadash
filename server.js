@@ -70,14 +70,6 @@ app.get('/table', async (req, res) => {
   }
 });
 
-app.get('/*', async (req, res) => {
-  try {
-    res.status(200).send('beans')
-  } catch (err) {
-    res.status(500).send('General beans Error')
-  }
-});
-
 app.use((req, res) => {
   res.status(404).send("Sorry, that route doesn't exist");
 });
