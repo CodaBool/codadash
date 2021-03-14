@@ -42,15 +42,15 @@ app.get('/', async (req, res) => {
     res.status(500).send('General Server Error')
   }
 });
-app.get('/dir', async (req, res) => {
+app.get('/table', async (req, res) => {
   try {
-    res.status(200).send(__dirname)
+    res.sendFile(path.join(__dirname + '/table.html'))
   } catch (err) {
     res.status(500).send('General Server Error')
   }
 });
 
-app.get('/table', async (req, res) => {
+app.get('/data', async (req, res) => {
   try {
     // remote pg connection
     const result = await query('SELECT * FROM post', [], pool_remote)
